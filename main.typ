@@ -1,18 +1,18 @@
 // Transform a simple math equation to a string
-#let strstack(obj) = obj.body.children.map(subobj => {
+#let _strstack(obj) = obj.body.children.map(subobj => {
     if subobj.has("text") {
         subobj.text
     } else {
         if subobj.fields().len() == 0 {
             " "
         } else {
-            strstack(subobj.fields())
+            _strstack(subobj.fields())
         }
     }
 }).flatten().join("")
 
 // Replaces 
-#let replaces = (names, vals, obj) => {
+#let _replaces = (names, vals, obj) => {
     // Basic operations, they doesn't need a particular approach
     let text = str(obj.replace("∧", "and").replace("∨", "or")).replace("¬", "not")
 
@@ -49,7 +49,7 @@
 }
 
 // Extract all 
-#let extract = (..obj) => {
+#let _extract = (..obj) => {
     let single_letters = ();
     for operation in obj.pos(){
         let string_operation = strstack(operation).split(" ");
@@ -64,7 +64,7 @@
 }
 
 #let generate_empty = (info, data) => {
-    let base = extract(..info)
+    let base = _extract(..info)
     let bL = base.len()
     let L = calc.pow(2, bL);
     let iL = info.len()
@@ -96,12 +96,12 @@
 
 
 #let generate_table = (info) => {
-    let base = extract(..info)
+    let base = _extract(..info)
     let bL = base.len()
     let L = calc.pow(2, bL);
     let iL = info.len()
     let nbBox = (iL + bL) * calc.pow(2, bL)
-    let transform = info.map(strstack)
+    let transform = info.map(_strstack)
     
     table(
         columns: iL + bL,
@@ -119,7 +119,7 @@
             let x = list.map(repr)
             (
                 ..for col in range(iL) { // The right side
-                    let m = replaces(base, x, transform.at(col))
+                    let m = _replaces(base, x, transform.at(col))
                     let k = eval(m);
                     ([#int(k)],)
                 }
