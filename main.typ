@@ -52,7 +52,7 @@
 #let _extract = (..obj) => {
     let single_letters = ();
     for operation in obj.pos(){
-        let string_operation = strstack(operation).split(" ");
+        let string_operation = _strstack(operation).split(" ");
         for substring in string_operation {
             let match = substring.match(regex("[a-zA-Z]"));
             if match != none and (match.text not in single_letters) {
@@ -95,7 +95,8 @@
 
 
 
-#let generate_table = (info) => {
+#let generate_table = (..inf) => {
+    let info = inf.pos()
     let base = _extract(..info)
     let bL = base.len()
     let L = calc.pow(2, bL);
