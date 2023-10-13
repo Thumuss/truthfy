@@ -43,7 +43,7 @@
     
     // Replace names by their values
     for e in range(names.len()) {
-        text = text.replace(names.at(e), vals.at(e))
+        text = text.replace(regex("" + names.at(e) + "{1}"), vals.at(e))
     }
     return text
 }
@@ -91,8 +91,6 @@
         })
     )
 }
-
-
 
 
 #let generate-table = (..inf) => {
