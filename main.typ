@@ -1,4 +1,10 @@
-#let (generate-empty, generate-table, truth-table, truth-table-empty,  NAND, NOR, nand, nor)= {
+#let (generate-empty, generate-table, truth-table, truth-table-empty,  NAND, NOR, nand, nor) = {
+    let symboles-conv(a) = {
+        if (a) {
+            "1"
+        } else { "0" }
+    }
+
     // Transform a simple math equation to a string
     let _strstack(obj) = if obj.body.has("b") {
         obj.body.base.text + "_" + obj.body.b.text;
@@ -22,7 +28,7 @@
     }).flatten().join("")}
 
     // Replaces names with their values (true or false)
-    let _replaces = (names, vals, obj) => {
+    let _replaces(names, vals, obj) = {
         // Replace names by their values
         let text = obj
         for e in range(names.len()) {
@@ -89,7 +95,7 @@
     }
 
     // Extract all propositions
-    let _extract = (..obj) => {
+    let _extract(..obj) = {
         let single_letters = ();
         for operation in obj.pos(){
             let string_operation = _strstack(operation).split(" ");
@@ -103,17 +109,17 @@
         return single_letters
     }
 
-    let _gen-nb-left-empty-truth(bL, row) = {
+    let _gen-nb-left-empty-truth(sc: symboles-conv, bL, row) = {
         for col in range(1, bL + 1).rev() {
             let raised = calc.pow(2, col - 1);
             let value = not calc.even(calc.floor(row / raised))
-            ([#int(value)],)
+            ([#sc(value)],)
         }
     }
 
     let _mathed(obj) = eval(obj, mode: "math")
 
-    let truth-table-empty = (info, data) => {
+    let truth-table-empty(sc: symboles-conv , info, data) = {
         let base = _extract(..info)
         let bL = base.len()
         let L = calc.pow(2, bL);
@@ -130,14 +136,16 @@
             columns: iL + bL,
             ..base.map(_mathed), ..info,
             ..(for row in range(L) {
-                (.._gen-nb-left-empty-truth(bL, row))
-                (..data.slice(row * iL, count: iL).map((a) => [#a]))
+                (.._gen-nb-left-empty-truth(sc: sc, bL, row))
+                (..data.slice(row * iL, count: iL).map((a) => [#if type(a) != "content" {sc(a)} else {a}]))
             })
         )
     }
 
+    
 
-    let truth-table = (..inf) => {
+
+    let truth-table(sc: symboles-conv ,..inf) = {
         let info = inf.pos()
         let base = _extract(..info)
         let bL = base.len()
@@ -156,7 +164,7 @@
                         let raised = calc.pow(2, col - 1);
                         let value = not calc.even(calc.floor(row / raised))
                         list.push(value)
-                        ([#int(value)],)
+                        ([#sc(value)],)
                     }
                 )
                 let x = list.map(repr)
@@ -166,7 +174,7 @@
                         let m = _replaces(base, x, transform.at(col));
                         //([#m],) // Debug
                         let k = eval(m);
-                        ([#int(k)],)
+                        ([#sc(k)],)
                     }
                 )}
             })
@@ -176,11 +184,7 @@
     let generate-table = truth-table; // DEPRECATED
     let generate-empty = truth-table-empty ; // DEPRECATED
 
-    let symboles-conv = (a) => {
-        if (a) {
-            "1"
-        } else { "0" }
-    }
+    
 
     // For simplified writing
     let NAND = "↑";
@@ -190,6 +194,4 @@
 
  (generate-empty, generate-table, truth-table, truth-table-empty, NAND, NOR, nand, nor)
 }
-
-#truth-table($a NAND b$, $a NOR b$)
 
