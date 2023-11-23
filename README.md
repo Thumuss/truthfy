@@ -1,7 +1,7 @@
 # Truthfy
 Make an empty or filled truth table in Typst
 
-# Functions
+# Export
 
 ```
 truth-table-empty(info: array[math_block], data: array[str]): table
