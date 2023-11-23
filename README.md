@@ -66,6 +66,7 @@ If you have any idea to add in this package, add a new issue [here](https://gith
 - Only `generate-table` and `generate-empty` are now exported
 - Better example with more cases
 - Implemented the `a ? b : c` operator <br/>
+
 `0.3.0`: 
 - Changing the name of `generate-table` and `generate-empty` to `truth-table` and `truth-table-empty`
 - Adding support of `NAND` and `NOR` operators.
