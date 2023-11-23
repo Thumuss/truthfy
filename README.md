@@ -16,7 +16,7 @@ NOR: Equivalent to sym.arrow.b
 
 # OPTIONS
 
-Theses functions hava a new named argument, called `sc` for symbol-convention.
+Theses functions have a new named argument, called `sc` for symbol-convention.
 
 You can add you own function to customise the render of the 0 and the 1. See examples.
 
