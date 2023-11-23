@@ -1,4 +1,4 @@
-#let (generate-empty, generate-table)= {
+#let (generate-empty, generate-table, truth-table, truth-table-empty,  NAND, NOR, nand, nor)= {
     // Transform a simple math equation to a string
     let _strstack(obj) = if obj.body.has("b") {
         obj.body.base.text + "_" + obj.body.b.text;
@@ -45,6 +45,22 @@
             } else {break}
         }
 
+        // ↑ Approach
+        while true {
+            let pos = text.match(regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*↑[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+")) 
+            if(pos != none) {
+                text = text.replace(pos.text, "not(" + pos.text.replace("↑", "and") + ")")
+            } else {break}
+        }
+
+        // ↓ Approach
+        while true {
+            let pos = text.match(regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*↓[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+")) 
+            if(pos != none) {
+                text = text.replace(pos.text, "not(" + pos.text.replace("↓", "or") + ")")
+            } else {break}
+        }
+
         // <=> Approach
         while true {
             let pos = text.match(regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*⇔[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+"))
@@ -87,7 +103,7 @@
         return single_letters
     }
 
-    let _gen-nb-left-empty(bL, row) = {
+    let _gen-nb-left-empty-truth(bL, row) = {
         for col in range(1, bL + 1).rev() {
             let raised = calc.pow(2, col - 1);
             let value = not calc.even(calc.floor(row / raised))
@@ -97,7 +113,7 @@
 
     let _mathed(obj) = eval(obj, mode: "math")
 
-    let generate-empty = (info, data) => {
+    let truth-table-empty = (info, data) => {
         let base = _extract(..info)
         let bL = base.len()
         let L = calc.pow(2, bL);
@@ -114,14 +130,14 @@
             columns: iL + bL,
             ..base.map(_mathed), ..info,
             ..(for row in range(L) {
-                (.._gen-nb-left-empty(bL, row))
+                (.._gen-nb-left-empty-truth(bL, row))
                 (..data.slice(row * iL, count: iL).map((a) => [#a]))
             })
         )
     }
 
 
-    let generate-table = (..inf) => {
+    let truth-table = (..inf) => {
         let info = inf.pos()
         let base = _extract(..info)
         let bL = base.len()
@@ -148,7 +164,7 @@
                 (
                     ..for col in range(iL) { // The right side
                         let m = _replaces(base, x, transform.at(col));
-                        //([#m],)
+                        //([#m],) // Debug
                         let k = eval(m);
                         ([#int(k)],)
                     }
@@ -156,5 +172,24 @@
             })
         )
     }
- (generate-empty, generate-table)
+    
+    let generate-table = truth-table; // DEPRECATED
+    let generate-empty = truth-table-empty ; // DEPRECATED
+
+    let symboles-conv = (a) => {
+        if (a) {
+            "1"
+        } else { "0" }
+    }
+
+    // For simplified writing
+    let NAND = "↑";
+    let NOR = "↓"
+    let nand = "↑"
+    let nor = "↓"
+
+ (generate-empty, generate-table, truth-table, truth-table-empty, NAND, NOR, nand, nor)
 }
+
+#truth-table($a NAND b$, $a NOR b$)
+
