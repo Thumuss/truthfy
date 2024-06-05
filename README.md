@@ -40,7 +40,7 @@ Syntax:
 ## Simple
 
 ```typst
-#import "@preview/truthfy:0.3.0": truth-table, truth-table-empty
+#import "@preview/truthfy:0.4.0": truth-table, truth-table-empty
 
 #truth-table($A and B$, $B or A$, $A => B$, $(A => B) <=> A$, $ A xor B$)
 
@@ -50,7 +50,7 @@ Syntax:
 ![image](https://media.discordapp.net/attachments/751591144919662752/1160216944138518588/image.png)
 
 ```typst
-#import "@preview/truthfy:0.3.0": truth-table, truth-table-empty
+#import "@preview/truthfy:0.4.0": truth-table, truth-table-empty
 
 #truth-table(sc: (a) => {if (a) {"a"} else {"b"}}, $a and b$)
 
@@ -78,3 +78,8 @@ If you have any idea to add in this package, add a new issue [here](https://gith
 - Adding support of `NAND` and `NOR` operators.
 - Adding support of custom `sc` function.
 - Better example and README.md
+
+`0.4.0`:
+- Add `karnaugh-empty`
+- Images re-added (see #2)
+- Add `reverse` option (see #3)
