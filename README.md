@@ -3,12 +3,15 @@ Make an empty or filled truth table in Typst
 
 # Export
 
-```
+```sh
 truth-table-empty(info: array[math_block], data: array[str]): table
-    Create an empty (or filled with "data") truth table. 
+    # Create an empty (or filled with "data") truth table. 
 
 truth-table(..info: array[math_block]): table
-    Create a filled truth table. Only "not and or xor => <=>" are consider in the resolution.
+    # Create a filled truth table.
+
+karnaugh-empty(info: array[math_block], data: array[str]): table
+    # Create an empty karnaugh table.
 
 NAND: Equivalent to sym.arrow.t
 NOR: Equivalent to sym.arrow.b
@@ -31,7 +34,10 @@ Syntax:
 }
 ```
 
+
 # Examples
+
+## Simple
 
 ```typst
 #import "@preview/truthfy:0.3.0": truth-table, truth-table-empty
