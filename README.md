@@ -47,7 +47,7 @@ Syntax:
 #truth-table($p => q$, $not p => (q => p)$, $p or q$, $not p or q$)
 ```
 
-![image](https://media.discordapp.net/attachments/751591144919662752/1160216944138518588/image.png)
+![image](https://github.com/Thumuss/truthfy/assets/42680097/7edb921d-659e-4348-a12a-07bcc3822012)
 
 ```typst
 #import "@preview/truthfy:0.4.0": truth-table, truth-table-empty
@@ -57,7 +57,7 @@ Syntax:
 #truth-table-empty(sc: (a) => {if (a) {"x"} else {"$"}}, ($a and b$,), (false, [], true))
 ```
 
-![image](https://media.discordapp.net/attachments/751591144919662752/1177380678715834389/image.png?ex=65724c34&is=655fd734&hm=c088867a3b3c960cf09ec054ffbc6d3f140d7aa389d637d0c6e7e9c08501d85e&=&format=webp&width=228&height=588)
+![image](https://github.com/Thumuss/truthfy/assets/42680097/1ccf6077-5cfb-4643-b621-1dc9529b8176)
 
 # Contributing
 
