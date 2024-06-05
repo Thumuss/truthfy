@@ -18,7 +18,7 @@ NOR: Equivalent to sym.arrow.b
 ```
 
 # OPTIONS
-
+## `sc`
 Theses functions have a new named argument, called `sc` for symbol-convention.
 
 You can add you own function to customise the render of the 0 and the 1. See examples.
@@ -33,7 +33,8 @@ Syntax:
     }
 }
 ```
-
+## `reverse`
+Reverse your table, see issue #3 
 
 # Examples
 
