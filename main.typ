@@ -60,7 +60,7 @@
         regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*⇒[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+"),
       ) // regex hell
       if (pos != none) {
-        text = text.replace(pos.text, "not " + pos.text.replace("⇒", "or"))
+        text = text.replace(pos.text, "not " + pos.text.replace("⇒", "or", count: 1))
       } else { break }
     }
 
@@ -70,7 +70,7 @@
         regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*↑[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+"),
       )
       if (pos != none) {
-        text = text.replace(pos.text, "not(" + pos.text.replace("↑", "and") + ")")
+        text = text.replace(pos.text, "not(" + pos.text.replace("↑", "and", count: 1) + ")")
       } else { break }
     }
 
@@ -80,7 +80,7 @@
         regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*↓[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+"),
       )
       if (pos != none) {
-        text = text.replace(pos.text, "not(" + pos.text.replace("↓", "or") + ")")
+        text = text.replace(pos.text, "not(" + pos.text.replace("↓", "or", count: 1) + ")")
       } else { break }
     }
 
@@ -90,7 +90,7 @@
         regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*⇔[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+"),
       )
       if (pos != none) {
-        text = text.replace(pos.text, "(" + pos.text.replace("⇔", "==") + ")")
+        text = text.replace(pos.text, "(" + pos.text.replace("⇔", "==", count: 1) + ")")
       } else { break }
     }
 
@@ -115,7 +115,7 @@
         regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*⊕[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+"),
       )
       if (pos != none) {
-        text = text.replace(pos.text, "not (" + pos.text.replace("⊕", "==") + ")")
+        text = text.replace(pos.text, "not (" + pos.text.replace("⊕", "==", count: 1) + ")")
       } else { break }
     }
 
