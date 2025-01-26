@@ -1,6 +1,6 @@
 [package]
 name = "truthfy"
-version = "0.4.0"
+version = "0.5.0"
 entrypoint = "main.typ"
 authors = ["Quemin Thomas <@Thumuss>"]
 license = "MIT"
@@ -13,5 +13,3 @@ keywords = [
 ]
 exclude = ["example.pdf", "example.typ", ".gitignore"]
 
-[tool.utpm]
-version = "3"
