@@ -41,7 +41,7 @@ Reverse your table, see issue #3
 ## Simple
 
 ```typst
-#import "@preview/truthfy:0.4.0": truth-table, truth-table-empty
+#import "@preview/truthfy:0.6.0": truth-table, truth-table-empty
 
 #truth-table($A and B$, $B or A$, $A => B$, $(A => B) <=> A$, $ A xor B$)
 
@@ -51,7 +51,7 @@ Reverse your table, see issue #3
 ![image](https://github.com/Thumuss/truthfy/assets/42680097/7edb921d-659e-4348-a12a-07bcc3822012)
 
 ```typst
-#import "@preview/truthfy:0.4.0": truth-table, truth-table-empty
+#import "@preview/truthfy:0.6.0": truth-table, truth-table-empty
 
 #truth-table(sc: (a) => {if (a) {"a"} else {"b"}}, $a and b$)
 
@@ -84,3 +84,10 @@ If you have any idea to add in this package, add a new issue [here](https://gith
 - Add `karnaugh-empty`
 - Images re-added (see #2)
 - Add `reverse` option (see #3)
+
+`0.5.0`:
+- Fix incorrect calculation (see #4)
+
+`0.6.0`:
+- Allow using `->` in math mode (see #9)
+- Fix a simple bug with how math expressions are read (see #6)
