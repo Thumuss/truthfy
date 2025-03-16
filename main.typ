@@ -80,9 +80,13 @@
     // => Approach
     // Please implement the do while :pray:
     while true {
-      let pos = text.match(regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*⇒[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+")) // regex hell
+      let pos = text.match(regex("(([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*⇒[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+)")) // regex hell
       if (pos != none) {
-        text = text.replace(pos.text, "not " + pos.text.replace("⇒", "or", count: 1))
+        text = text.replace(pos.text, "not " + pos.text)
+        let implicationMatch = text.matches("⇒").last()
+        let leftHandSide = text.slice(0, implicationMatch.start)
+        let rightHandSide = text.slice(implicationMatch.end)
+        text = leftHandSide + "or" + rightHandSide
       } else { break }
     }
 
@@ -200,7 +204,7 @@
         for row in range(L) {
           (.._gen-nb-left-empty-truth(reverse: reverse, sc: sc, bL, row),)
           (
-            ..data.slice(row * iL, count: iL).map(a => [#if type(a) != "content" { sc(a) } else { a }]),
+            ..data.slice(row * iL, count: iL).map(a => [#if type(a) != content { sc(a) } else { a }]),
           )
         }
       ),
