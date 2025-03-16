@@ -156,7 +156,7 @@
   let _gen-nb-left-empty-truth(reverse: false, sc: symboles-conv, bL, row) = {
     let rng = range(1, bL + 1)
     for col in if reverse { rng } else { rng.rev() } {
-      let raised = calc.pow(2, col - 1)
+      let raised = calc.pow(2, bL - col)
       let vl = if reverse { (L - 1) - row } else { row }
       let value = not calc.even(calc.floor(vl / raised))
       ([#sc(value)],)
@@ -372,7 +372,7 @@
           (
             ..for col in rng {
               // The left side
-              let raised = calc.pow(2, col - 1)
+              let raised = calc.pow(2, bL - col)
               let vl = if reverse { (L - 1) - row } else { row }
               let value = not calc.even(calc.floor(vl / raised))
               list.push(value)
