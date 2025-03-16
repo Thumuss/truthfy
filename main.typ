@@ -198,6 +198,7 @@
 
     table(
       columns: iL + bL,
+      align: center,
       ..base.map(_mathed),
       ..info,
       ..(
@@ -273,6 +274,7 @@
 
     table(
       columns: columns,
+      align: center,
       name,
       ..for col in range(columns - 1) {
         let m = _concat-object-karnaugh(reverse: reverse, sc: sc, i: col, nb: bL >= 3)
@@ -363,7 +365,7 @@
       base = base.rev()
     }
 
-    table(columns: iL + bL, ..base.map(_mathed), ..info, ..(
+    table(columns: iL + bL, align: center, ..base.map(_mathed), ..info, ..(
         for row in range(L) {
           let list = ()
           let rng = range(1, bL + 1)
