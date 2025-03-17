@@ -1,4 +1,5 @@
 # Truthfy
+
 Make an empty or filled truth table in Typst
 
 # Export
@@ -18,12 +19,15 @@ NOR: Equivalent to sym.arrow.b
 ```
 
 # OPTIONS
+
 ## `sc`
-Theses functions have a new named argument, called `sc` for symbol-convention.
 
-You can add you own function to customise the render of the 0 and the 1. See examples.
+These functions have a new named argument, called `sc` for symbol-convention.
 
-Syntax: 
+You can add your own function to customise the render of the 0 and the 1. See examples.
+
+Syntax:
+
 ```typst
 #let sc(symb) = {
     if (symb) {
@@ -33,17 +37,25 @@ Syntax:
     }
 }
 ```
+
 ## `reverse`
-Reverse your table, see issue #3 
+
+Reverse your table, see issue #3
 
 ## `order`
 
 Change the order of your symbol.
 
-You can use any combination of theses values: "alphabetical", "reverse"
+You can use any combination of these values: "alphabetical", "reverse", "textbook".
 
 - "alphabetical": sort your symbols based on the alphabetical order.
-- "reverse": sort by changing the order of the actual list into a reverse one
+- "reverse": sort by changing the order of the actual list into a reverse one.
+- "textbook": sort by changing the order of the predicate truth values into a typical textbook order.
+
+## `align`
+
+Align your table, using Typst Table
+alignement [https://typst.app/docs/guides/table-guide/#alignment](https://typst.app/docs/guides/table-guide/#alignment).
 
 # Examples
 
@@ -78,28 +90,33 @@ If you have any idea to add in this package, add a new issue [here](https://gith
 # Changelog
 
 `0.1.0`: Create the package. <br/>
-`0.2.0`: 
+`0.2.0`:
+
 - You can now use `t`, `r`, `u`, `e`, `f`, `a`, `l`, `s` without any problems!
 - You can now add subscript to a letter
 - Only `generate-table` and `generate-empty` are now exported
 - Better example with more cases
 - Implemented the `a ? b : c` operator <br/>
 
-`0.3.0`: 
+`0.3.0`:
+
 - Changing the name of `generate-table` and `generate-empty` to `truth-table` and `truth-table-empty`
 - Adding support of `NAND` and `NOR` operators.
 - Adding support of custom `sc` function.
 - Better example and README.md
 
 `0.4.0`:
+
 - Add `karnaugh-empty`
 - Images re-added (see #2)
 - Add `reverse` option (see #3)
 
 `0.5.0`:
+
 - Fix incorrect calculation (see #4)
 
 `0.6.0`:
+
 - Allow using `->` in math mode (see #9)
 - Fix a simple bug with how math expressions are read (see #6)
 - Add a new option: `order` (see #8)

@@ -11,4 +11,3 @@ keywords = [
     "table",
 ]
 exclude = ["example.pdf", "example.typ", ".gitignore"]
-

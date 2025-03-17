@@ -13,6 +13,6 @@
 #truth-table($A → B$)
 
 #truth-table($p => p$, $(p => p) => p$, $p => (p => p)$)
-#truth-table(sc: (T) => {if (T) {$T$} else {$F$}}, order: "alphabetical", $q → r$, $(q → r) and (p or r)$, $p or r$, $p → q$, $(p → q) → r$)
+#truth-table(align: center, sc: (T) => {if (T) {$T$} else {$F$}}, order: "alphabetical textbook", $q → r$, $(q → r) and (p or r)$, $p or r$, $p → q$, $(p → q) → r$)
 
 #truth-table-empty(sc: (a) => {if (a) {"x"} else {"$"}}, ($a and b$,), (false, [], true))

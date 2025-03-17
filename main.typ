@@ -153,10 +153,10 @@
     return single_letters
   }
 
-  let _gen-nb-left-empty-truth(reverse: false, sc: symboles-conv, bL, row) = {
+  let _gen-nb-left-empty-truth(reverse: false, order: "default", sc: symboles-conv, bL, row) = {
     let rng = range(1, bL + 1)
     for col in if reverse { rng } else { rng.rev() } {
-      let raised = calc.pow(2, bL - col)
+      let raised = if order.contains("textbook") { calc.pow(2, bL - col) } else { calc.pow(2, col - 1) }
       let vl = if reverse { (L - 1) - row } else { row }
       let value = not calc.even(calc.floor(vl / raised))
       ([#sc(value)],)
@@ -165,7 +165,7 @@
 
   let _mathed(obj) = eval(obj, mode: "math")
 
-  let truth-table-empty(reverse: false, order: "default", sc: symboles-conv, info, data) = {
+  let truth-table-empty(align: auto, reverse: false, order: "default", sc: symboles-conv, info, data) = {
     let base = _extract(..info)
 
     if order.contains("alphabetical") {
@@ -198,12 +198,12 @@
 
     table(
       columns: iL + bL,
-      align: center,
+      align: align,
       ..base.map(_mathed),
       ..info,
       ..(
         for row in range(L) {
-          (.._gen-nb-left-empty-truth(reverse: reverse, sc: sc, bL, row),)
+          (.._gen-nb-left-empty-truth(reverse: reverse, order: order, sc: sc, bL, row),)
           (
             ..data.slice(row * iL, count: iL).map(a => [#if type(a) != content { sc(a) } else { a }]),
           )
@@ -234,7 +234,7 @@
     }
   }
 
-  let karnaugh-empty(reverse: false, order: "default", sc: symboles-conv, info, data) = {
+  let karnaugh-empty(align: auto, reverse: false, order: "default", sc: symboles-conv, info, data) = {
     let base = _extract(..info)
 
     if order.contains("alphabetical") {
@@ -274,7 +274,7 @@
 
     table(
       columns: columns,
-      align: center,
+      align: align,
       name,
       ..for col in range(columns - 1) {
         let m = _concat-object-karnaugh(reverse: reverse, sc: sc, i: col, nb: bL >= 3)
@@ -339,7 +339,7 @@
     //karnaugh-empty(sc: sc, objInfo, data)
   }*/
 
-  let truth-table(reverse: false, sc: symboles-conv, order: "default", ..inf) = {
+  let truth-table(align: auto, reverse: false, sc: symboles-conv, order: "default", ..inf) = {
     let info = inf.pos()
     let base = _extract(..info)
     let bL = base.len()
@@ -365,14 +365,14 @@
       base = base.rev()
     }
 
-    table(columns: iL + bL, align: center, ..base.map(_mathed), ..info, ..(
+    table(columns: iL + bL, align: align, ..base.map(_mathed), ..info, ..(
         for row in range(L) {
           let list = ()
           let rng = range(1, bL + 1)
           (
             ..for col in rng {
               // The left side
-              let raised = calc.pow(2, bL - col)
+              let raised = if order.contains("textbook") { calc.pow(2, bL - col) } else { calc.pow(2, col - 1) }
               let vl = if reverse { (L - 1) - row } else { row }
               let value = not calc.even(calc.floor(vl / raised))
               list.push(value)
