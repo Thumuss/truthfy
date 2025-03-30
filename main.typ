@@ -80,13 +80,9 @@
     // => Approach
     // Please implement the do while :pray:
     while true {
-      let pos = text.match(regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*⇒[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+")) // regex hell
+      let pos = text.match(regex("([(]+.*[)]|[a-zA-Z]+(_\d+)?)+[ ]*⇒[ ]*([(]+.*[)]|[a-zA-Z]+(_\d+)?)+")) // regex hell
       if (pos != none) {
-        text = text.replace(pos.text, "not " + pos.text)
-        let implicationMatch = text.matches("⇒").last()
-        let leftHandSide = text.slice(0, implicationMatch.start)
-        let rightHandSide = text.slice(implicationMatch.end)
-        text = leftHandSide + "or" + rightHandSide
+        text = text.replace(pos.text, "not " + pos.captures.at(0) + " or " + pos.captures.at(2))
       } else { break }
     }
 
