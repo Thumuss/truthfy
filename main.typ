@@ -1,3 +1,20 @@
+#let impliesSymbols = ("⇒", "→", "⊃")
+#let equivalenceSymbols = ("⇔", "↔", "≡")
+#let negationSymbols = ("¬", "∼", "!", "′")
+#let conjunctionSymbols = ("∧", "·", "&")
+#let disjunctionSymbols = ("∨", "\\+", "∥")
+#let exclusiveOrSymbols = ("⊕", "⊻", "↮", "≢")
+
+#let replace_symbols(text) = {
+  text = text.replace(regex(impliesSymbols.join("|")), "⇒")
+             .replace(regex(equivalenceSymbols.join("|")), "⇔")
+             .replace(regex(negationSymbols.join("|")), "not")
+             .replace(regex(conjunctionSymbols.join("|")), "and")
+             .replace(regex(disjunctionSymbols.join("|")), "or")
+             .replace(regex(exclusiveOrSymbols.join("|")), "⊕")
+  text
+}
+
 #let (
   generate-empty,
   generate-table,
@@ -75,7 +92,7 @@
     }
 
     // Basic operations, they doesn't need a particular approach
-    text = str(text.replace("∧", "and").replace("∨", "or")).replace("¬", "not").replace("→", "⇒")
+    text = replace_symbols(text)
 
     // => Approach
     // Please implement the do while :pray:
