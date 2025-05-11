@@ -1,4 +1,4 @@
-#import "main.typ": *
+#import "../src/main.typ": *
 
 = Logic Symbols Examples
 

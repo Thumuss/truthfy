@@ -1,23 +1,29 @@
+// Symbols you can use for logical implication. \
+// See [Material_conditional](https://en.wikipedia.org/wiki/Material_conditional>)
 #let impliesSymbols = ("⇒", "→", "⊃")
+
+// Symbols you can use for logical equivalence. \
+// See [Logical_biconditional](https://en.wikipedia.org/wiki/Logical_biconditional)
 #let equivalenceSymbols = ("⇔", "↔", "≡")
+
+// Symbols you can use for logical negation. \
+// See [Negation](https://en.wikipedia.org/wiki/Negation)
 #let negationSymbols = ("¬", "∼", "!", "′")
+
+// Symbols you can use for logical conjuction. \
+// See [Logical_conjunction](https://en.wikipedia.org/wiki/Logical_conjunction)
 #let conjunctionSymbols = ("∧", "·", "&")
+
+// Symbols you can use for logical conjuction. \
+// See [Logical_disjunction](https://en.wikipedia.org/wiki/Logical_disjunction)
 #let disjunctionSymbols = ("∨", "\\+", "∥")
+
+// Symbols you can use for logical exclusive or. \
+// See [Exclusive_or](https://en.wikipedia.org/wiki/Exclusive_or)
 #let exclusiveOrSymbols = ("⊕", "⊻", "↮", "≢")
 
-#let replace_symbols(text) = {
-  text = text.replace(regex(impliesSymbols.join("|")), "⇒")
-             .replace(regex(equivalenceSymbols.join("|")), "⇔")
-             .replace(regex(negationSymbols.join("|")), "not")
-             .replace(regex(conjunctionSymbols.join("|")), "and")
-             .replace(regex(disjunctionSymbols.join("|")), "or")
-             .replace(regex(exclusiveOrSymbols.join("|")), "⊕")
-  text
-}
 
 #let (
-  generate-empty,
-  generate-table,
   truth-table,
   truth-table-empty,
   NAND,
@@ -25,15 +31,32 @@
   nand,
   nor,
   karnaugh-empty,
-  //karnaugh,
 ) = {
+
+  // Exemple of a function that produce a custom output.
   let symboles-conv(a) = {
     if (a) {
       "1"
     } else { "0" }
   }
 
-  /// Transform a simple math equation to a string
+  // Replace all logicals symbols into a unique character base on their category. \
+  // Helps to maintain a set of symbols.
+  let replace_symbols(text) = {
+    text = text
+      .replace(regex(impliesSymbols.join("|")), "⇒")
+      .replace(regex(equivalenceSymbols.join("|")), "⇔")
+      .replace(regex(negationSymbols.join("|")), "not")
+      .replace(regex(conjunctionSymbols.join("|")), "and")
+      .replace(regex(disjunctionSymbols.join("|")), "or")
+      .replace(regex(exclusiveOrSymbols.join("|")), "⊕")
+    text
+  }
+
+
+  // Transform a simple math equation to a string \
+  // *[WARNING]:* Can change between version of typst. \
+  // Beware it might not work on other version than the latest.
   let _strstack(obj) = {
     let i = obj.at("body", default: false)
     if i == false {
@@ -309,49 +332,6 @@
     )
   }
 
-  /*let karnaugh(sc: symboles-conv, ..info) = {
-    let objInfo = info.pos()
-    let base = _extract(..objInfo)
-    let data = ()
-    let bL = base.len()
-    assert(
-      bL >= 2,
-      message: "You need more than 1 variable and max 4 variables to use a karnaugh table.",
-    );
-
-    let L = int(calc.pow(2, bL - 1) / 2);
-    if L == 1 { L = 2 } // hack for now
-    let nbBox = calc.pow(2, bL)
-    let columns = _nb-cols-karnaugh.at(bL)
-
-    let transform = objInfo.map(_strstack).map(a => "(" + a + ")")
-
-    let joined = if transform.at(0).contains("∧") {
-      transform.join("∨")
-    } else {
-      transform.join("∧")
-    }
-
-    let elems2 = ((false, false), (false, true), (true, false), (true, true)).map(a => a.map(repr))
-
-    let elem3 = {
-      let o = elems2
-      (o.map(a => ("false", ..a)) + o.map(a => ("true", ..a)))
-    }
-
-    let zeros = if (base.len() == 2) { elem2 } else if (base.len() == 3) { elem3 } else {}
-
-    for i in range(nbBox) {
-      let x = zeros.at(i)
-      repr(x)
-      /*let repp = _replaces(base, x, joined)
-      data.push(eval(repp))*/
-      //data.push(false)
-    }
-
-    //karnaugh-empty(sc: sc, objInfo, data)
-  }*/
-
   let truth-table(align: auto, reverse: false, sc: symboles-conv, order: "default", ..inf) = {
     let info = inf.pos()
     let base = _extract(..info)
@@ -408,18 +388,14 @@
       ))
   }
 
-  let generate-table = truth-table // DEPRECATED
-  let generate-empty = truth-table-empty // DEPRECATED
 
   // For simplified writing
   let NAND = "↑"
   let NOR = "↓"
-  let nand = "↑"
-  let nor = "↓"
+  let nand = NAND
+  let nor = NOR
 
   (
-    generate-empty,
-    generate-table,
     truth-table,
     truth-table-empty,
     NAND,

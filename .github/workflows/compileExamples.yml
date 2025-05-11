@@ -1,0 +1,18 @@
+name: Compile latest Examples
+on:   
+  push:
+    branches:
+      - main
+      - dev
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: typst-community/setup-typst@v4
+      - run: for e in examples/*.typ; do typst c $e; done;
+      - uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: examples/*.pdf
+          if-no-files-found: error

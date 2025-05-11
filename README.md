@@ -1,122 +1,132 @@
-# Truthfy
+<center>
 
-Make an empty or filled truth table in Typst
+# 🧠 Truthfy
 
-# Export
+**Generate truth tables effortlessly — manual or automatic.**
+</center>
 
-```sh
-truth-table-empty(info: array[math_block], data: array[str]): table
-    # Create an empty (or filled with "data") truth table. 
+`Truthfy` makes it easy to generate **truth tables** and **Karnaugh maps** with minimal Typst code. 
+Whether you're a student, a teacher, or just dabbling in logic, Truthfy helps you visualize logic expressions — fast and clean and write your papers effortlessly.
 
-truth-table(..info: array[math_block]): table
-    # Create a filled truth table.
+---
 
-karnaugh-empty(info: array[math_block], data: array[str]): table
-    # Create an empty karnaugh table.
+## ✨ What You Can Do
 
-NAND: Equivalent to sym.arrow.t
-NOR: Equivalent to sym.arrow.b
+- 📋 Generate truth tables — pre-filled or empty
+- 🧩 Create empty Karnaugh maps
+- 🎨 Customize how 0 and 1 are displayed by using <a href="#sc">`Symbol Convention`</a>
+- 🔃 Reverse, reorder, align your rows, anything you want!
+
+---
+
+## 🔧 Quick Functions
+
+```typst
+#let truth-table(..info: array[math_block]): table
 ```
+➡️ Create a **filled** truth table from logical expressions.
 
-# OPTIONS
+```typst
+#let truth-table-empty(info: array[math_block], data: array[str]): table
+```
+➡️ Create an **empty** table — or fill it manually.
 
-## `sc`
+```typst
+#let karnaugh-empty(info: array[math_block], data: array[str]): table
+```
+➡️ Build an empty Karnaugh map.
 
-These functions have a new named argument, called `sc` for symbol-convention.
+Special symbols:
+- `NAND`: like `sym.arrow.t`
+- `NOR`: like `sym.arrow.b`
 
-You can add your own function to customise the render of the 0 and the 1. See examples.
+---
 
-Syntax:
+## 🛠 Options You Can Use
+
+<div id="sc"/>
+
+### 🔣 `sc`: Symbol Convention 
+Customize how `0` and `1` are rendered:
 
 ```typst
 #let sc(symb) = {
-    if (symb) {
-        "an one"
-    } else {
-        "a zero"
-    }
+  if (symb) { // It's 1!
+    "✅"
+  } else { // It's 0!
+    "❌"
+  }
 }
 ```
-
-## `reverse`
-
-Reverse your table, see issue #3
-
-## `order`
-
-Change the order of your symbol.
-
-You can use any combination of these values: "alphabetical", "reverse", "textbook".
-
-- "alphabetical": sort your symbols based on the alphabetical order.
-- "reverse": sort by changing the order of the actual list into a reverse one.
-- "textbook": sort by changing the order of the predicate truth values into a typical textbook order.
-
-## `align`
-
-Align your table, using Typst Table
-alignement [https://typst.app/docs/guides/table-guide/#alignment](https://typst.app/docs/guides/table-guide/#alignment).
-
-# Examples
-
-## Simple
-
+Use it like:
 ```typst
-#import "@preview/truthfy:0.6.0": truth-table, truth-table-empty
-
-#truth-table($A and B$, $B or A$, $A => B$, $(A => B) <=> A$, $ A xor B$)
-
-#truth-table($p => q$, $not p => (q => p)$, $p or q$, $not p or q$)
+#truth-table(sc: sc, $A and B$)
 ```
 
-![image](https://github.com/Thumuss/truthfy/assets/42680097/7edb921d-659e-4348-a12a-07bcc3822012)
+### 🔁 `reverse`
+Flip your truth table from bottom to top.
+
+### 🔠 `order`
+Control the order of variable evaluation:
+- `"alphabetical"`
+- `"reverse"`
+- `"textbook"` (classic logic order)
+
+### 📐 `align`
+Align your table columns with Typst's native [table guide](https://typst.app/docs/guides/table-guide/#alignment).
+
+---
+
+## 🚀 Get Started — In Seconds
 
 ```typst
-#import "@preview/truthfy:0.6.0": truth-table, truth-table-empty
+#import "@preview/truthfy:0.6.0": truth-table
 
-#truth-table(sc: (a) => {if (a) {"a"} else {"b"}}, $a and b$)
-
-#truth-table-empty(sc: (a) => {if (a) {"x"} else {"$"}}, ($a and b$,), (false, [], true))
+#truth-table($A and B$, $A or B$, $A => B$, $A xor B$)
 ```
 
-![image](https://github.com/Thumuss/truthfy/assets/42680097/1ccf6077-5cfb-4643-b621-1dc9529b8176)
+🖼️ Output:
+![Example](https://github.com/Thumuss/truthfy/assets/42680097/7edb921d-659e-4348-a12a-07bcc3822012)
 
-See [example.pdf](/example.pdf) and [example.typ](/example.typ) to have more examples.
+Want something fancier?
+```typst
+#truth-table(sc: (x) => if x {"✔"} else {"✘"}, $a and b$)
+```
 
-# Contributing
+Or go manual:
+```typst
+#truth-table-empty(sc: (x) => if x {"1"} else {"0"},
+  ($a and b$,),
+  (false, [], true)
+)
+```
 
-If you have any idea to add in this package, add a new issue [here](https://github.com/Thumuss/truthfy/issues)!
+🖼️ Output:
+![Custom Symbols](https://github.com/Thumuss/truthfy/assets/42680097/1ccf6077-5cfb-4643-b621-1dc9529b8176)
 
-# Changelog
+🔎 See [example.typ](/example.typ) and [example.pdf](/example.pdf) for full samples.
 
-`0.1.0`: Create the package. <br/>
-`0.2.0`:
+---
 
-- You can now use `t`, `r`, `u`, `e`, `f`, `a`, `l`, `s` without any problems!
-- You can now add subscript to a letter
-- Only `generate-table` and `generate-empty` are now exported
-- Better example with more cases
-- Implemented the `a ? b : c` operator <br/>
+## 🧑‍💻 Contribute
 
-`0.3.0`:
+New idea? Bug found? Head over to [Issues](https://github.com/Thumuss/truthfy/issues) and let's improve Truthfy together.
 
-- Changing the name of `generate-table` and `generate-empty` to `truth-table` and `truth-table-empty`
-- Adding support of `NAND` and `NOR` operators.
-- Adding support of custom `sc` function.
-- Better example and README.md
+---
 
-`0.4.0`:
+## 📜 Changelog Highlights
 
-- Add `karnaugh-empty`
-- Images re-added (see #2)
-- Add `reverse` option (see #3)
+### `0.6.0`
+- Support for `->` in math mode ✅
+- Better math expression parsing 📚
+- New `order` option 🧮
 
-`0.5.0`:
+### Earlier...
+- `karnaugh-empty` support
+- `sc` for customizing symbols
+- Better examples, visuals, and reversed tables
 
-- Fix incorrect calculation (see #4)
+---
 
-`0.6.0`:
+**Truthfy** — *For logic lovers, learners, and Typst tinkerers.*
 
-- Allow using `->` in math mode (see #9)
-- Fix a simple bug with how math expressions are read (see #6)
-- Add a new option: `order` (see #8)

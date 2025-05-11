@@ -1,13 +1,13 @@
 [package]
 name = "truthfy"
-version = "0.6.0"
-entrypoint = "main.typ"
+version = "0.7.0"
+entrypoint = "src/main.typ"
 authors = ["Quemin Thomas <@Thumuss>"]
 license = "MIT"
-description = "Make empty or automatically filled truth table"
+description = "Generate truth tables effortlessly — manual or automatic."
 repository = "https://github.com/Thumuss/truthfy"
 keywords = [
     "truth",
     "table",
 ]
-exclude = ["example.pdf", "example.typ", ".gitignore"]
+exclude = ["examples", ".gitignore"]
