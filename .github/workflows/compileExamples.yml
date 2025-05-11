@@ -13,6 +13,6 @@ jobs:
       - run: for e in examples/*.typ; do typst c $e --root .; done;
       - uses: actions/upload-artifact@v4
         with:
-          name: Examples files
+          name: ExamplesfilesPDF
           path: examples/*.pdf
           if-no-files-found: error
