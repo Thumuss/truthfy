@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - uses: typst-community/setup-typst@v4
-      - run: for e in examples/*.typ; do typst c $e; done;
+      - run: for e in examples/*.typ; do typst c $e --root .; done;
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact
