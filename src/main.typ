@@ -187,7 +187,10 @@
   let _mathed(obj) = eval(obj, mode: "math")
 
   let truth-table-empty(align: auto, reverse: false, order: "default", sc: symboles-conv, info, data) = {
-    let base = _extract(..info)
+    // Each entry may be plain math content or a dict (eq: <math>, display: <content>).
+    let eqs     = info.map(it => if type(it) == dictionary { it.eq } else { it })
+    let headers = info.map(it => if type(it) == dictionary { it.at("display", default: it.eq) } else { it })
+    let base = _extract(..eqs)
 
     if order.contains("alphabetical") {
       base = base.sorted(
@@ -221,7 +224,7 @@
       columns: iL + bL,
       align: align,
       ..base.map(_mathed),
-      ..info,
+      ..headers,
       ..(
         for row in range(L) {
           (.._gen-nb-left-empty-truth(reverse: reverse, order: order, sc: sc, bL, row),)
@@ -318,7 +321,10 @@
   }
 
   let truth-table(align: auto, reverse: false, sc: symboles-conv, order: "default", ..inf) = {
-    let info = inf.pos()
+    let raw = inf.pos()
+    // Each entry may be plain math content or a dict (eq: <math>, display: <content>).
+    let info    = raw.map(it => if type(it) == dictionary { it.eq } else { it })
+    let headers = raw.map(it => if type(it) == dictionary { it.at("display", default: it.eq) } else { it })
     let base = _extract(..info)
     let bL = base.len()
     let L = calc.pow(2, bL)
@@ -343,7 +349,7 @@
       base = base.rev()
     }
 
-    table(columns: iL + bL, align: align, ..base.map(_mathed), ..info, ..(
+    table(columns: iL + bL, align: align, ..base.map(_mathed), ..headers, ..(
         for row in range(L) {
           let list = ()
           let rng = range(1, bL + 1)

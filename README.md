@@ -15,6 +15,7 @@ Whether you're a student, a teacher, or just dabbling in logic, Truthfy helps yo
 - 📋 Generate truth tables — pre-filled or empty
 - 🧩 Create empty Karnaugh maps
 - 🎨 Customize how 0 and 1 are displayed by using <a href="#sc">`Symbol Convention`</a>
+- 🏷️ Use <a href="#custom-headers">custom column headers</a> while keeping the correct expression for computation
 - 🔃 Reverse, reorder, align your rows, anything you want!
 
 ---
@@ -75,6 +76,29 @@ Control the order of variable evaluation:
 ### 📐 `align`
 Align your table columns with Typst's native [table guide](https://typst.app/docs/guides/table-guide/#alignment).
 
+<div id="custom-headers"/>
+
+### 🏷️ Custom column headers
+By default the column header is the math expression itself. You can override it by passing a dictionary with `eq` (the expression used for computation) and `display` (what appears in the header):
+
+```typst
+#truth-table(
+  (eq: $A and B$, display: $A B$),
+  (eq: $A or not B$, display: $A + overline(B)$),
+)
+```
+
+Plain expressions can be freely mixed with custom-header dictionaries — existing usage is unaffected:
+
+```typst
+#truth-table(
+  (eq: $A and B$, display: $A B$),
+  $A or B$,
+)
+```
+
+The `display` key is optional; omitting it falls back to showing `eq` as the header.
+
 ---
 
 ## 🚀 Get Started — In Seconds
@@ -119,10 +143,11 @@ examples/
   basicExamples.typ         # General usage examples
   logicSymbolsExample.typ   # NOR / NAND and custom symbol examples
 tests/
-  testNorNand.typ   # Assertion tests for NOR and NAND (direct and nested)
-  testBasicOps.typ  # Assertion tests for AND, OR, NOT, IMPLIES, XOR, EQUIV
-  testOrder.typ     # Assertion tests for all ordering options
-  run.sh            # Test runner script
+  testNorNand.typ      # Assertion tests for NOR and NAND (direct and nested)
+  testBasicOps.typ     # Assertion tests for AND, OR, NOT, IMPLIES, XOR, EQUIV
+  testOrder.typ        # Assertion tests for all ordering options
+  testCustomHeaders.typ  # Assertion tests for custom column headers
+  run.sh               # Test runner script
 justfile              # just commands (see below)
 ```
 
@@ -152,6 +177,7 @@ New idea? Bug found? Head over to [Issues](https://github.com/Thumuss/truthfy/is
 
 ### `0.7.0`
 - Fixed evaluation of nested NOR / NAND expressions ✅
+- Custom column headers via `(eq: $...$, display: [...])` dictionary syntax 🏷️
 
 ### `0.6.0`
 - Support for `->` in math mode ✅
