@@ -1,5 +1,5 @@
 // Symbols you can use for logical implication. \
-// See [Material_conditional](https://en.wikipedia.org/wiki/Material_conditional>)
+// See [Material_conditional](https://en.wikipedia.org/wiki/Material_conditional)
 #let impliesSymbols = ("⇒", "→", "⊃")
 
 // Symbols you can use for logical equivalence. \
@@ -10,11 +10,11 @@
 // See [Negation](https://en.wikipedia.org/wiki/Negation)
 #let negationSymbols = ("¬", "∼", "!", "′")
 
-// Symbols you can use for logical conjuction. \
+// Symbols you can use for logical conjunction. \
 // See [Logical_conjunction](https://en.wikipedia.org/wiki/Logical_conjunction)
 #let conjunctionSymbols = ("∧", "·", "&")
 
-// Symbols you can use for logical conjuction. \
+// Symbols you can use for logical disjunction. \
 // See [Logical_disjunction](https://en.wikipedia.org/wiki/Logical_disjunction)
 #let disjunctionSymbols = ("∨", "\\+", "∥")
 
@@ -58,23 +58,22 @@
   // *[WARNING]:* Can change between version of typst. \
   // Beware it might not work on other version than the latest.
   let _strstack(obj) = {
+    let _proc(subobj) = {
+      if subobj.has("text") {
+        subobj.text
+      } else if subobj.fields().len() == 0 {
+        " "
+      } else if subobj.has("b") {
+        subobj.base.text + "_" + subobj.b.text
+      } else {
+        _strstack(subobj.fields())
+      }
+    }
     let i = obj.at("body", default: false)
     if i == false {
       return obj
         .values()
-        .map(a => a.map(subobj => if subobj.has("text") {
-          subobj.text
-        } else {
-          if subobj.fields().len() == 0 {
-            " "
-          } else {
-            if (subobj.has("b")) {
-              subobj.base.text + "_" + subobj.b.text
-            } else {
-              _strstack(subobj.fields())
-            }
-          }
-        }))
+        .map(a => a.map(_proc))
     } else if obj.body.has("b") {
       return obj.body.base.text + "_" + obj.body.b.text
     } else if not obj.body.has("children") {
@@ -83,21 +82,7 @@
       return obj
         .body
         .children
-        .map(subobj => {
-          if subobj.has("text") {
-            subobj.text
-          } else {
-            if subobj.fields().len() == 0 {
-              " "
-            } else {
-              if (subobj.has("b")) {
-                subobj.base.text + "_" + subobj.b.text
-              } else {
-                _strstack(subobj.fields())
-              }
-            }
-          }
-        })
+        .map(_proc)
         .flatten()
         .join("")
     }
@@ -128,17 +113,17 @@
 
     // ↑ Approach
     while true {
-      let pos = text.match(regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*↑[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+"))
+      let pos = text.match(regex("([(]+.*[)]|[a-zA-Z]+(_\d+)?)+[ ]*↑[ ]*([(]+.*[)]|[a-zA-Z]+(_\d+)?)+"))
       if (pos != none) {
-        text = text.replace(pos.text, "not(" + pos.text.replace("↑", "and", count: 1) + ")")
+        text = text.replace(pos.text, "not(" + pos.captures.at(0) + " and " + pos.captures.at(2) + ")")
       } else { break }
     }
 
     // ↓ Approach
     while true {
-      let pos = text.match(regex("([(]+.*[)]|[a-zA-Z](_\d+)?)+[ ]*↓[ ]*([(]+.*[)]|[a-zA-Z](_\d+)?)+"))
+      let pos = text.match(regex("([(]+.*[)]|[a-zA-Z]+(_\d+)?)+[ ]*↓[ ]*([(]+.*[)]|[a-zA-Z]+(_\d+)?)+"))
       if (pos != none) {
-        text = text.replace(pos.text, "not(" + pos.text.replace("↓", "or", count: 1) + ")")
+        text = text.replace(pos.text, "not(" + pos.captures.at(0) + " or " + pos.captures.at(2) + ")")
       } else { break }
     }
 
