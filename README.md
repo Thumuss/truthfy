@@ -132,7 +132,7 @@ Install [`just`](https://github.com/casey/just) and then run any of these from t
 
 | Command | Description |
 |---|---|
-| `just tests` | Compile every `tests/test_*.typ` file and assert correctness |
+| `just tests` | Compile every `tests/test*.typ` file and assert correctness |
 | `just examples` | Compile all example files to PDF |
 | `just ci` | Run `tests` then `examples` — useful before opening a PR |
 | `just clean` | Delete all generated PDFs in `examples/` and `tests/` |
