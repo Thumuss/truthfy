@@ -1,5 +1,6 @@
 # Truthfy
 main.pdf
+tests/*.pdf
 
 # JetBrains
 .idea
