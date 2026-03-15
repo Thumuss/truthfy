@@ -23,3 +23,9 @@
 #let leftHandSide = $(#A) -> (#B)$
 #let rightHandSide = $not (#B) -> (#C)$
 #truth-table(align: center, sc: (T) => {if (T) {$T$} else {$F$}}, order: "alphabetical textbook", A, B, leftHandSide, $not (#B)$, C, rightHandSide)
+
+#truth-table(
+  (eq: $A and B$, display: $A B$),
+  (eq: $A or not B$, display: $A + overline(B)$),
+  $A and B or not A$,
+)
