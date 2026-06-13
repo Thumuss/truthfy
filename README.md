@@ -55,7 +55,7 @@ You can use any combination of these values: "alphabetical", "reverse", "textboo
 ## `align`
 
 Align your table, using Typst Table
-alignement [https://typst.app/docs/guides/table-guide/#alignment](https://typst.app/docs/guides/table-guide/#alignment).
+alignment [https://typst.app/docs/guides/table-guide/#alignment](https://typst.app/docs/guides/table-guide/#alignment).
 
 # Examples
 
