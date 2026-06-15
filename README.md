@@ -31,7 +31,7 @@ Syntax:
 ```typst
 #let sc(symb) = {
     if (symb) {
-        "an one"
+        "a one"
     } else {
         "a zero"
     }
@@ -44,7 +44,7 @@ Reverse your table, see issue #3
 
 ## `order`
 
-Change the order of your symbol.
+Change the order of your symbols.
 
 You can use any combination of these values: "alphabetical", "reverse", "textbook".
 
